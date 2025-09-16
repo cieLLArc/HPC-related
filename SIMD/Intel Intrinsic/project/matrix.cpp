@@ -177,26 +177,6 @@ void compute_4_4(double **A, double **B, double **C, int m, int n, int k)
     {
         for (int j = 0; j < n; j += 4)
         {
-            C[i + 0][j + 0] = 0;
-            C[i + 0][j + 1] = 0;
-            C[i + 0][j + 2] = 0;
-            C[i + 0][j + 3] = 0;
-
-            C[i + 1][j + 0] = 0;
-            C[i + 1][j + 1] = 0;
-            C[i + 1][j + 2] = 0;
-            C[i + 1][j + 3] = 0;
-
-            C[i + 2][j + 0] = 0;
-            C[i + 2][j + 1] = 0;
-            C[i + 2][j + 2] = 0;
-            C[i + 2][j + 3] = 0;
-
-            C[i + 3][j + 0] = 0;
-            C[i + 3][j + 1] = 0;
-            C[i + 3][j + 2] = 0;
-            C[i + 3][j + 3] = 0;
-
             for (int p = 0; p < k; p++)
             {
                 C[i + 0][j + 0] += A[i + 0][p] * B[p][j + 0];
@@ -336,28 +316,92 @@ void compute_4_4_loop_reduce(double **A, double **B, double **C, int m, int n, i
     {
         for (int j = 0; j < n; j += 4)
         {
-            // C[i + 0][j + 0] = 0;
-            // C[i + 0][j + 1] = 0;
-            // C[i + 0][j + 2] = 0;
-            // C[i + 0][j + 3] = 0;
-
-            // C[i + 1][j + 0] = 0;
-            // C[i + 1][j + 1] = 0;
-            // C[i + 1][j + 2] = 0;
-            // C[i + 1][j + 3] = 0;
-
-            // C[i + 2][j + 0] = 0;
-            // C[i + 2][j + 1] = 0;
-            // C[i + 2][j + 2] = 0;
-            // C[i + 2][j + 3] = 0;
-
-            // C[i + 3][j + 0] = 0;
-            // C[i + 3][j + 1] = 0;
-            // C[i + 3][j + 2] = 0;
-            // C[i + 3][j + 3] = 0;
-
             for (int p = 0; p < k; p += 4)
             {
+                // Ci+0行
+                // C[i + 0][j + 0] += A[i + 0][p + 0] * B[p + 0][j + 0];
+                // C[i + 0][j + 1] += A[i + 0][p + 0] * B[p + 0][j + 1];
+                // C[i + 0][j + 2] += A[i + 0][p + 0] * B[p + 0][j + 2];
+                // C[i + 0][j + 3] += A[i + 0][p + 0] * B[p + 0][j + 3];
+
+                // C[i + 0][j + 0] += A[i + 0][p + 1] * B[p + 1][j + 0];
+                // C[i + 0][j + 1] += A[i + 0][p + 1] * B[p + 1][j + 1];
+                // C[i + 0][j + 2] += A[i + 0][p + 1] * B[p + 1][j + 2];
+                // C[i + 0][j + 3] += A[i + 0][p + 1] * B[p + 1][j + 3];
+
+                // C[i + 0][j + 0] += A[i + 0][p + 2] * B[p + 2][j + 0];
+                // C[i + 0][j + 1] += A[i + 0][p + 2] * B[p + 2][j + 1];
+                // C[i + 0][j + 2] += A[i + 0][p + 2] * B[p + 2][j + 2];
+                // C[i + 0][j + 3] += A[i + 0][p + 2] * B[p + 2][j + 3];
+
+                // C[i + 0][j + 0] += A[i + 0][p + 3] * B[p + 3][j + 0];
+                // C[i + 0][j + 1] += A[i + 0][p + 3] * B[p + 3][j + 1];
+                // C[i + 0][j + 2] += A[i + 0][p + 3] * B[p + 3][j + 2];
+                // C[i + 0][j + 3] += A[i + 0][p + 3] * B[p + 3][j + 3];
+
+                // // Ci+1行
+                // C[i + 1][j + 0] += A[i + 1][p + 0] * B[p + 0][j + 0];
+                // C[i + 1][j + 1] += A[i + 1][p + 0] * B[p + 0][j + 1];
+                // C[i + 1][j + 2] += A[i + 1][p + 0] * B[p + 0][j + 2];
+                // C[i + 1][j + 3] += A[i + 1][p + 0] * B[p + 0][j + 3];
+
+                // C[i + 1][j + 0] += A[i + 1][p + 1] * B[p + 1][j + 0];
+                // C[i + 1][j + 1] += A[i + 1][p + 1] * B[p + 1][j + 1];
+                // C[i + 1][j + 2] += A[i + 1][p + 1] * B[p + 1][j + 2];
+                // C[i + 1][j + 3] += A[i + 1][p + 1] * B[p + 1][j + 3];
+
+                // C[i + 1][j + 0] += A[i + 1][p + 2] * B[p + 2][j + 0];
+                // C[i + 1][j + 1] += A[i + 1][p + 2] * B[p + 2][j + 1];
+                // C[i + 1][j + 2] += A[i + 1][p + 2] * B[p + 2][j + 2];
+                // C[i + 1][j + 3] += A[i + 1][p + 2] * B[p + 2][j + 3];
+
+                // C[i + 1][j + 0] += A[i + 1][p + 3] * B[p + 3][j + 0];
+                // C[i + 1][j + 1] += A[i + 1][p + 3] * B[p + 3][j + 1];
+                // C[i + 1][j + 2] += A[i + 1][p + 3] * B[p + 3][j + 2];
+                // C[i + 1][j + 3] += A[i + 1][p + 3] * B[p + 3][j + 3];
+
+                // // Ci+2行
+                // C[i + 2][j + 0] += A[i + 2][p + 0] * B[p + 0][j + 0];
+                // C[i + 2][j + 1] += A[i + 2][p + 0] * B[p + 0][j + 1];
+                // C[i + 2][j + 2] += A[i + 2][p + 0] * B[p + 0][j + 2];
+                // C[i + 2][j + 3] += A[i + 2][p + 0] * B[p + 0][j + 3];
+
+                // C[i + 2][j + 0] += A[i + 2][p + 1] * B[p + 1][j + 0];
+                // C[i + 2][j + 1] += A[i + 2][p + 1] * B[p + 1][j + 1];
+                // C[i + 2][j + 2] += A[i + 2][p + 1] * B[p + 1][j + 2];
+                // C[i + 2][j + 3] += A[i + 2][p + 1] * B[p + 1][j + 3];
+
+                // C[i + 2][j + 0] += A[i + 2][p + 2] * B[p + 2][j + 0];
+                // C[i + 2][j + 1] += A[i + 2][p + 2] * B[p + 2][j + 1];
+                // C[i + 2][j + 2] += A[i + 2][p + 2] * B[p + 2][j + 2];
+                // C[i + 2][j + 3] += A[i + 2][p + 2] * B[p + 2][j + 3];
+
+                // C[i + 2][j + 0] += A[i + 2][p + 3] * B[p + 3][j + 0];
+                // C[i + 2][j + 1] += A[i + 2][p + 3] * B[p + 3][j + 1];
+                // C[i + 2][j + 2] += A[i + 2][p + 3] * B[p + 3][j + 2];
+                // C[i + 2][j + 3] += A[i + 2][p + 3] * B[p + 3][j + 3];
+
+                // // Ci+3行
+                // C[i + 3][j + 0] += A[i + 3][p + 0] * B[p + 0][j + 0];
+                // C[i + 3][j + 0] += A[i + 3][p + 1] * B[p + 1][j + 0];
+                // C[i + 3][j + 0] += A[i + 3][p + 2] * B[p + 2][j + 0];
+                // C[i + 3][j + 0] += A[i + 3][p + 3] * B[p + 3][j + 0];
+
+                // C[i + 3][j + 1] += A[i + 3][p + 0] * B[p + 0][j + 1];
+                // C[i + 3][j + 1] += A[i + 3][p + 1] * B[p + 1][j + 1];
+                // C[i + 3][j + 1] += A[i + 3][p + 2] * B[p + 2][j + 1];
+                // C[i + 3][j + 1] += A[i + 3][p + 3] * B[p + 3][j + 1];
+
+                // C[i + 3][j + 2] += A[i + 3][p + 0] * B[p + 0][j + 2];
+                // C[i + 3][j + 2] += A[i + 3][p + 1] * B[p + 1][j + 2];
+                // C[i + 3][j + 2] += A[i + 3][p + 2] * B[p + 2][j + 2];
+                // C[i + 3][j + 2] += A[i + 3][p + 3] * B[p + 3][j + 2];
+
+                // C[i + 3][j + 3] += A[i + 3][p + 0] * B[p + 0][j + 3];
+                // C[i + 3][j + 3] += A[i + 3][p + 1] * B[p + 1][j + 3];
+                // C[i + 3][j + 3] += A[i + 3][p + 2] * B[p + 2][j + 3];
+                // C[i + 3][j + 3] += A[i + 3][p + 3] * B[p + 3][j + 3];
+
                 C[i + 0][j + 0] += A[i + 0][p + 0] * B[p + 0][j + 0];
                 C[i + 0][j + 0] += A[i + 0][p + 1] * B[p + 1][j + 0];
                 C[i + 0][j + 0] += A[i + 0][p + 2] * B[p + 2][j + 0];
@@ -472,10 +516,11 @@ void compute_sse(double **A, double **B, double **C, int m, int n, int k)
             __m128d c_22_c_12_vreg = _mm_setzero_pd();
             __m128d c_23_c_13_vreg = _mm_setzero_pd();
 
-            for (int p = 0; p < k; p++)
+            for (int p = 0; p < k; p++) //
             {
                 // sse使用128位寄存器xmm,故将两个double变量存入其中
                 // A为动态分配的指针数组，A[0]指向第一行的起始地址，遍历指针A[0]可以得到A[0][1],A[0][2]......的值
+                //
                 // 本函数内传入的参数**A实际上为矩阵A的转置，
                 // 如何使用循环变量p实现对A中逐行隔2取地址
                 a_0p_a_1p_vreg = _mm_loadu_pd((double *)&A[p][j]);
@@ -487,7 +532,7 @@ void compute_sse(double **A, double **B, double **C, int m, int n, int k)
 
                 _mm_storeu_pd(val_0_1, a_0p_a_1p_vreg);
                 _mm_storeu_pd(val_2_3, a_2p_a_3p_vreg);
-                printf("[%lf, %lf, %lf, %lf]\n", val_0_1[0], val_0_1[1], val_2_3[1], val_2_3[1]);
+                printf("rol %d of A [%lf, %lf, %lf, %lf]\n", p, val_0_1[0], val_0_1[1], val_2_3[1], val_2_3[1]);
 
                 // p++是对内层分量维度的遍历，
 
@@ -495,11 +540,11 @@ void compute_sse(double **A, double **B, double **C, int m, int n, int k)
                 // B内的数据要以何种形式取出
                 //
                 // B内数据如何程序化循环取出
-                b_p0_vreg = _mm_loadu_pd((double *)(&B[p + 0][j]));
-                b_p1_vreg = _mm_loadu_pd((double *)(&B[p + 2][j]));
+                b_p0_vreg = _mm_loadu_pd((double *)(bp0_ptr++));
+                b_p1_vreg = _mm_loadu_pd((double *)(bp1_ptr++));
 
-                b_p2_vreg = _mm_loadu_pd((double *)(&B[p + 2][j]));
-                b_p3_vreg = _mm_loadu_pd((double *)(&B[p + 3][j]));
+                b_p2_vreg = _mm_loadu_pd((double *)(bp2_ptr++));
+                b_p3_vreg = _mm_loadu_pd((double *)(bp3_ptr++));
 
                 // b_p0_vreg = _mm_loadu_pd((double *)(bp0_ptr++));
                 // b_p1_vreg = _mm_loadu_pd((double *)(bp1_ptr++));

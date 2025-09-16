@@ -6,6 +6,9 @@
             "command": "C:\\msys64\\ucrt64\\bin\\gcc.exe",
             "args": [
                 "-fdiagnostics-color=always",
+                "-march=native",
+                "-fopenmp",
+                "-O2",
                 "-g",
                 "${file}",
                 "-o",
@@ -29,6 +32,9 @@
             "command": "C:\\msys64\\ucrt64\\bin\\g++.exe",
             "args": [
                 "-fdiagnostics-color=always",
+                "-march=native",
+                "-fopenmp",
+                "-O2",
                 "-g",
                 "${file}",
                 "-o",
